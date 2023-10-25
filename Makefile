@@ -1,5 +1,5 @@
 # OBJS specifies which files to compile as part of the project
-OBJS = *.c
+OBJS = src/*.c
 
 # CXX specifies the compiler that we want to use
 CXX = gcc
@@ -21,18 +21,20 @@ LINKER_PATHS = -L"/usr/local/lib"
 LINKER_FLAGS = -lraylib -lm
 
 # OBJ_NAME specifies the name of our executable
+# OUT_FOLDER specifies the folder of our executable
 OBJ_NAME = game
+OUT_FOLDER = build
 
 ###############################################################################
 
 # This is the target that compiles our executable
 compile: $(OBJS)
-	$(CXX) $(COMPILER_FLAGS) $(INCLUDE_PATHS) $(LINKER_PATHS) $(LINKER_FLAGS) $(OBJS) -o $(OBJ_NAME)
+	$(CXX) $(COMPILER_FLAGS) $(INCLUDE_PATHS) $(LINKER_PATHS) $(LINKER_FLAGS) $(OBJS) -o $(OUT_FOLDER)/$(OBJ_NAME)
 
 # This command run the executable
-run: game
-	./$(OBJ_NAME)
+run: $(OUT_FOLDER)/$(OBJ_NAME)
+	./$(OUT_FOLDER)/$(OBJ_NAME)
 
 # This command removes the previously created executable
-clean: game
-	rm $(OBJ_NAME)
+clean: $(OUT_FOLDER)/$(OBJ_NAME)
+	rm ./$(OUT_FOLDER)/$(OBJ_NAME)

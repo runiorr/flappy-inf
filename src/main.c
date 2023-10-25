@@ -12,6 +12,7 @@
  ********************************************************************************************/
 
 #include "raylib.h"
+#include "../include/player.h"
 
 #define MAX_FRAME_SPEED 15
 #define MIN_FRAME_SPEED 1
@@ -29,10 +30,14 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "raylib [texture] example - sprite anim");
 
     // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
-    Texture2D scarfy = LoadTexture("resources/scarfy.png"); // Texture loading
+    // Texture2D scarfy = LoadTexture("resources/scarfy.png"); // Texture loading
+    struct Player player;
+    player.texture = LoadTexture("resources/scarfy.png");
+    // player.frameRec = frameRec;
 
+    Rectangle frameRec = {0.0f, 0.0f, (float)player.texture.width / 6, (float)player.texture.height};
     Vector2 position = {350.0f, 280.0f};
-    Rectangle frameRec = {0.0f, 0.0f, (float)scarfy.width / 6, (float)scarfy.height};
+
     int currentFrame = 0;
 
     int framesCounter = 0;
@@ -56,7 +61,7 @@ int main(void)
             if (currentFrame > 5)
                 currentFrame = 0;
 
-            frameRec.x = (float)currentFrame * (float)scarfy.width / 6;
+            frameRec.x = (float)currentFrame * (float)player.texture.width / 6;
         }
 
         // Control frames speed
@@ -77,8 +82,8 @@ int main(void)
 
         ClearBackground(RAYWHITE);
 
-        DrawTexture(scarfy, 15, 40, WHITE);
-        DrawRectangleLines(15, 40, scarfy.width, scarfy.height, LIME);
+        DrawTexture(player.texture, 15, 40, WHITE);
+        DrawRectangleLines(15, 40, player.texture.width, player.texture.height, LIME);
         DrawRectangleLines(15 + (int)frameRec.x, 40 + (int)frameRec.y, (int)frameRec.width, (int)frameRec.height, RED);
 
         DrawText("FRAME SPEED: ", 165, 210, 10, DARKGRAY);
@@ -92,7 +97,7 @@ int main(void)
             DrawRectangleLines(250 + 21 * i, 205, 20, 20, MAROON);
         }
 
-        DrawTextureRec(scarfy, frameRec, position, WHITE); // Draw part of the texture
+        DrawTextureRec(player.texture, frameRec, position, WHITE); // Draw part of the texture
 
         DrawText("(c) Scarfy sprite by Eiden Marsal", screenWidth - 200, screenHeight - 20, 10, GRAY);
 
@@ -102,7 +107,7 @@ int main(void)
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
-    UnloadTexture(scarfy); // Texture unloading
+    UnloadTexture(player.texture); // Texture unloading
 
     CloseWindow(); // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
