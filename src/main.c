@@ -6,18 +6,24 @@
 
 int main(void)
 {
-    const int screenWidth = 800;
-    const int screenHeight = 450;
+    const int screenWidth = 1200;
+    const int screenHeight = 800;
 
     // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
     InitWindow(screenWidth, screenHeight, "raylib [texture] example - sprite anim");
 
-    Texture2D runTexture = LoadTexture("resources/dummy/char_run_cycle.png");
-    Texture2D idleTexture = LoadTexture("resources/dummy/char_idle.png");
+    Texture2D runTexture = LoadTexture("resources/flappy_mov.png");
+    Texture2D idleTexture = LoadTexture("resources/flappy.png");
 
-    Player p = {
-        .run = (Sprite){runTexture, 8, load_frame_rec(runTexture, 8)},
-        .idle = (Sprite){idleTexture, 10, load_frame_rec(idleTexture, 10)},
+    Image background_day_image = LoadImage("resources/background_day.png");
+    Texture2D background_day = LoadTextureFromImage(background_day_image);
+    UnloadImage(background_day_image);
+
+    // Texture2D pipeTexture = LoadTexture("resources/obstaculo.png");
+
+    Player player = {
+        .run = (Sprite){runTexture, 3, load_frame_rec(runTexture, 3)},
+        .idle = (Sprite){idleTexture, 1, load_frame_rec(idleTexture, 1)},
         .position = {(float)screenWidth / 2, (float)screenHeight / 2},
         .standing = true,
         .facingRight = true};
@@ -25,6 +31,7 @@ int main(void)
     int framesCounter = 0;
     int framesSpeed = 8; // Number of spritesheet frames shown by second
     int currentFrame = 0;
+
     SetTargetFPS(60);
     //--------------------------------------------------------------------------------------
 
@@ -43,24 +50,30 @@ int main(void)
             if (currentFrame > 5)
                 currentFrame = 0;
 
-            tick_frame(&p, currentFrame);
+            tick_frame(&player, currentFrame);
         }
 
         // Control player
-        tick_input(&p);
+        tick_input(&player);
 
         // Draw textures
         //----------------------------------------------------------------------------------
         BeginDrawing();
+
         ClearBackground(RAYWHITE);
-        tick_animation(&p, WHITE);
-        DrawText("Testing player movement with animation", screenWidth - 250, screenHeight - 20, 10, GRAY);
+
+        DrawTexture(background_day, screenWidth / 2 - background_day.width / 2, screenHeight / 2 - background_day.height / 2 - 40, WHITE);
+        tick_animation(&player, WHITE);
+
+        DrawText("FlappyINF", screenWidth - 250, screenHeight - 20, 10, GRAY);
+
         EndDrawing();
         //----------------------------------------------------------------------------------
     }
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
+    UnloadTexture(background_day);
     UnloadTexture(runTexture);
     UnloadTexture(idleTexture);
 
