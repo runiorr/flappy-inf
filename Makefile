@@ -41,4 +41,4 @@ clean: $(OUT_FOLDER)/$(OBJ_NAME)
 	rm ./$(OUT_FOLDER)/$(OBJ_NAME)
 
 all:
-	make clean && make compile && make run
+	make clean & make compile && make run
