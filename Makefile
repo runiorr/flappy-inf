@@ -9,7 +9,8 @@ CXX = gcc
 # -Wall: Enables all compiler's warning messages
 # -Wextra: This enables some extra warning flags that are not enabled by -Wall.
 # -Werror: Make all warnings into errors.
-COMPILER_FLAGS = -Wall -Wextra -Werror -std=c99
+COMPILER_FLAGS = -std=c99 -Wall -Wextra -Werror 
+#-Wall -Wextra -Werror 
 
 # INCLUDE_PATHS
 INCLUDE_PATHS = -I"/usr/local/include"
@@ -38,3 +39,6 @@ run: $(OUT_FOLDER)/$(OBJ_NAME)
 # This command removes the previously created executable
 clean: $(OUT_FOLDER)/$(OBJ_NAME)
 	rm ./$(OUT_FOLDER)/$(OBJ_NAME)
+
+all:
+	make clean && make compile && make run

@@ -1,8 +1,21 @@
 #include "raylib.h"
+#include <stdbool.h>
+#include "sprite.h"
 
-struct Player
+#ifndef PLAYER_H
+#define PLAYER_H
+
+typedef struct Player
 {
-    Texture2D texture;
-    // Rectangle frameRec;
-    // Vector2 position;
-};
+    Sprite idle;
+    Sprite run;
+    Vector2 position;
+    bool standing;
+    bool facingRight;
+} Player;
+
+void tick_frame(Player *p, float currentFrame);
+void tick_input(Player *p);
+void tick_animation(Player *p, Color color);
+
+#endif /* PLAYER_H */
