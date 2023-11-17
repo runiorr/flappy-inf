@@ -23,6 +23,16 @@ void tick_input(Player *p)
         p->standing = false;
         p->facingRight = true;
         p->position.x += 2.0f;
+
+        if (IsKeyDown(KEY_UP))
+        {
+            p->position.y -= 1.5f;
+        }
+
+        else if (IsKeyDown(KEY_DOWN))
+        {
+            p->position.y += 1.5f;
+        }
     }
 
     else if (IsKeyDown(KEY_LEFT))
@@ -30,6 +40,16 @@ void tick_input(Player *p)
         p->standing = false;
         p->facingRight = false;
         p->position.x -= 2.0f;
+
+        if (IsKeyDown(KEY_UP))
+        {
+            p->position.y -= 1.5f;
+        }
+
+        else if (IsKeyDown(KEY_DOWN))
+        {
+            p->position.y += 1.5f;
+        }
     }
 
     else if (IsKeyDown(KEY_UP))
