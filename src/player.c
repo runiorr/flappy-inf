@@ -6,93 +6,32 @@
 
 void tick_frame(Player *p, float currentFrame)
 {
-    if (p->standing)
-    {
-        p->idle.rec.x = (float)currentFrame * (float)p->idle.texture.width / p->idle.n_sprites;
-    }
-    else
-    {
-        p->run.rec.x = (float)currentFrame * (float)p->run.texture.width / p->run.n_sprites;
-    }
+    p->sprite.rec.x = (float)currentFrame * (p->sprite.texture.width / p->sprite.n_sprites);
+
+    Image croppedImage = ImageFromImage(p->image, p->sprite.rec);
+    Texture2D currentTexture = LoadTextureFromImage(croppedImage);
+    p->current = currentTexture;
+
+    // UnloadImage(croppedImage);
 };
 
 void tick_input(Player *p)
 {
-    if (IsKeyDown(KEY_RIGHT))
-    {
-        p->standing = false;
-        p->facingRight = true;
-        p->position.x += 2.0f;
+    if (IsKeyDown(KEY_SPACE))
+        p->velocity.y = -p->jumpSpeed;
 
-        if (IsKeyDown(KEY_UP))
-        {
-            p->position.y -= 1.5f;
-        }
+    p->velocity.y += 0.5f; // Gravity
 
-        else if (IsKeyDown(KEY_DOWN))
-        {
-            p->position.y += 1.5f;
-        }
-    }
-
-    else if (IsKeyDown(KEY_LEFT))
-    {
-        p->standing = false;
-        p->facingRight = false;
-        p->position.x -= 2.0f;
-
-        if (IsKeyDown(KEY_UP))
-        {
-            p->position.y -= 1.5f;
-        }
-
-        else if (IsKeyDown(KEY_DOWN))
-        {
-            p->position.y += 1.5f;
-        }
-    }
-
-    else if (IsKeyDown(KEY_UP))
-    {
-        p->standing = false;
-        p->position.y -= 2.0f;
-    }
-
-    else if (IsKeyDown(KEY_DOWN))
-    {
-        p->standing = false;
-        p->position.y += 2.0f;
-    }
-
-    else
-    {
-        p->standing = true;
-    }
+    p->position.y += p->velocity.y;
 };
 
 void tick_animation(Player *p, Color color)
 {
-    bool right_movement = p->facingRight == 1 AND(p->run.rec.width <= 0 OR p->idle.rec.width <= 0);
-    bool left_movement = p->facingRight == 0 AND(p->run.rec.width >= 0 OR p->idle.rec.width >= 0);
+    float tiltAngle = (p->velocity.y / 10.0f) * 25.0f;
 
-    if (right_movement)
-    {
-        p->run.rec.width = -p->run.rec.width;
-        p->idle.rec.width = -p->idle.rec.width;
-    }
+    Rectangle source = {0, 0, p->current.width, p->current.height};
+    Rectangle dest = {p->position.x, p->position.y, p->current.width, p->current.height};
+    Vector2 origin = {p->current.width / 2, p->current.height / 2};
 
-    if (left_movement)
-    {
-        p->run.rec.width = -p->run.rec.width;
-        p->idle.rec.width = -p->idle.rec.width;
-    }
-
-    if (p->standing)
-    {
-        DrawTextureRec(p->idle.texture, p->idle.rec, p->position, color);
-    }
-    else
-    {
-        DrawTextureRec(p->run.texture, p->run.rec, p->position, color);
-    }
+    DrawTexturePro(p->current, source, dest, origin, tiltAngle, color);
 };

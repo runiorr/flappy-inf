@@ -12,21 +12,20 @@ int main(void)
     // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
     InitWindow(screenWidth, screenHeight, "raylib [texture] example - sprite anim");
 
-    Texture2D runTexture = LoadTexture("resources/flappy_mov.png");
-    Texture2D idleTexture = LoadTexture("resources/flappy.png");
-
     Image background_day_image = LoadImage("resources/background_day.png");
     Texture2D background_day = LoadTextureFromImage(background_day_image);
     UnloadImage(background_day_image);
 
     // Texture2D pipeTexture = LoadTexture("resources/obstaculo.png");
 
+    Texture2D sprite = LoadTexture("resources/flappy_mov_red.png");
     Player player = {
-        .run = (Sprite){runTexture, 3, load_frame_rec(runTexture, 3)},
-        .idle = (Sprite){idleTexture, 1, load_frame_rec(idleTexture, 1)},
-        .position = {(float)screenWidth / 2, (float)screenHeight / 2},
-        .standing = true,
-        .facingRight = true};
+        .sprite = (Sprite){sprite, 3, load_frame_rec(sprite, 3)},
+        .image = LoadImage("resources/flappy_mov_red.png"),
+        .current = LoadTexture("resources/flappy_red.png"),
+        .position = {(float)screenWidth / 4, (float)screenHeight / 2},
+        .velocity = {0, 0},
+        .jumpSpeed = 8.0f};
 
     int framesCounter = 0;
     int framesSpeed = 8; // Number of spritesheet frames shown by second
@@ -74,8 +73,10 @@ int main(void)
     // De-Initialization
     //--------------------------------------------------------------------------------------
     UnloadTexture(background_day);
-    UnloadTexture(runTexture);
-    UnloadTexture(idleTexture);
+    UnloadTexture(sprite);
+
+    UnloadImage(player.image);
+    UnloadTexture(player.current);
 
     CloseWindow(); // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
