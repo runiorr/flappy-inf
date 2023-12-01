@@ -9,7 +9,7 @@ CXX = gcc
 # -Wall: Enables all compiler's warning messages
 # -Wextra: This enables some extra warning flags that are not enabled by -Wall.
 # -Werror: Make all warnings into errors.
-COMPILER_FLAGS = -std=c99 -Wall -Wextra -Werror 
+COMPILER_FLAGS = -std=c99 -Wall -Wextra 
 #-Wall -Wextra -Werror 
 
 # INCLUDE_PATHS

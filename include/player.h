@@ -7,15 +7,14 @@
 
 typedef struct Player
 {
-    Sprite sprite;
-    Image image;
+    Texture2D *textures;
     Texture2D current;
     Vector2 position;
     Vector2 velocity;
     float jumpSpeed;
 } Player;
 
-void tick_frame(Player *p, float currentFrame);
+void tick_frame(Player *p, int currentFrame);
 void tick_input(Player *p);
 void tick_animation(Player *p, Color color);
 
