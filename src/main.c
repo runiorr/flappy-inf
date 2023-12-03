@@ -12,10 +12,10 @@ int main(void)
     // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
     InitWindow(screenWidth, screenHeight, "raylib [texture] example - sprite anim");
 
-    Texture2D background = LoadTexture("resources/background_day.png");
+    Texture2D background = LoadTexture("resources/scenario/background_day.png");
     // Texture2D pipeTexture = LoadTexture("resources/obstaculo.png");
 
-    Image spriteImage = LoadImage("resources/flappy_mov_red.png");
+    Image spriteImage = LoadImage("resources/flappy/flappy_mov_red.png");
     Texture2D *textures = load_textures(spriteImage, 3);
     Player player = {
         .textures = textures,

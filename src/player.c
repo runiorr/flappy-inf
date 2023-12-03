@@ -4,7 +4,7 @@
 void tick_frame(Player *p, int currentFrame)
 {
     p->current = p->textures[currentFrame];
-};
+}
 
 void tick_input(Player *p)
 {
@@ -12,7 +12,7 @@ void tick_input(Player *p)
         p->velocity.y = -p->jumpSpeed;
     p->velocity.y += 0.5f; // Gravity
     p->position.y += p->velocity.y;
-};
+}
 
 void tick_animation(Player *p, Color color)
 {
@@ -21,4 +21,4 @@ void tick_animation(Player *p, Color color)
     Rectangle dest = {p->position.x, p->position.y, p->current.width, p->current.height};
     Vector2 origin = {p->current.width / 2, p->current.height / 2};
     DrawTexturePro(p->current, source, dest, origin, tiltAngle, color);
-};
+}

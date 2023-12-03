@@ -5,7 +5,7 @@ Rectangle load_frame_rec(Texture2D texture, int n_sprites)
 {
     Rectangle frameRec = {0.0f, 0.0f, texture.width / n_sprites, texture.height};
     return frameRec;
-};
+}
 
 Texture2D *load_textures(Image image, int n_sprites)
 {
@@ -23,4 +23,4 @@ Texture2D *load_textures(Image image, int n_sprites)
     }
     UnloadTexture(tmpTexture);
     return textures;
-};
+}
