@@ -1,0 +1,20 @@
+{
+    "files.associations": {
+        "raylib.h": "c99",
+        "player.h": "c99",
+        "sprite.h": "c99",
+        "obstacle.h": "c99",
+        "stdio.h": "c",
+        "stdbool.h": "c",
+        "stdlib.h": "c"
+    },
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/*.o": true,
+        "**/*.exe": true,
+    }
+}
