@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "../include/player.h"
+#include "player.h"
 
 void tick_frame(Player *p, int currentFrame)
 {

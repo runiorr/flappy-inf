@@ -1,8 +1,8 @@
 #include "raylib.h"
 #include <stdio.h>
 #include <stdbool.h>
-#include "../include/player.h"
-#include "../include/sprite.h"
+#include "player.h"
+#include "sprite.h"
 
 int main(void)
 {
@@ -73,10 +73,7 @@ int main(void)
     // De-Initialization
     //--------------------------------------------------------------------------------------
     UnloadTexture(background);
-
     UnloadImage(spriteImage);
-
-    UnloadTexture(player.current);
 
     for (int i = 0; i < 3; i++)
     {
