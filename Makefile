@@ -1,43 +1,42 @@
-# OBJS specifies which files to compile as part of the project
-OBJS = src/*.c
+SRCDIR = src
+SRCFILES = $(wildcard $(SRCDIR)/*.c)
 
-# CXX specifies the compiler that we want to use
-CXX = gcc
+MAIN = main.c
+SOURCES = $(filter-out $(SRCDIR)/$(MAIN), $(SRCFILES)) # Remove the main file from the list of source files
 
-# COMPILER_FLAGS specifies the additional compilation options that we are using
-# -w: Inhibit all warning messages.
-# -Wall: Enables all compiler's warning messages
-# -Wextra: This enables some extra warning flags that are not enabled by -Wall.
-# -Werror: Make all warnings into errors.
-COMPILER_FLAGS = -std=c99 -Wall -Wextra -Werror -pedantic-errors
+CC = gcc
+CFLAGS = -std=c99 -Wall -Wextra -Werror -pedantic-errors
 
-# INCLUDE_PATHS
-INCLUDE_PATHS = -I"/usr/local/include"
-
-# LINKER_PATHS
-LINKER_PATHS = -L"/usr/local/lib"
-
-# LINKER_FLAGS
+INCLUDE_PATHS = -I"/usr/local/include" -I"./include"
+LINKER_PATHS = -L"/usr/local/lib" -L"./lib"
 LINKER_FLAGS = -lraylib -lm
 
-# OBJ_NAME specifies the name of our executable
-# OUT_FOLDER specifies the folder of our executable
-OBJ_NAME = game
-OUT_FOLDER = build
+BUILDDIR = build
+TARGET = game
+
+###############################################################################
+# Check running platform
+
+ifeq ($(OS),Windows_NT)
+    # Windows settings
+    RM = del /Q
+    TARGET_EXTENSION = .exe
+else
+    # Linux settings
+    RM = rm -f
+    TARGET_EXTENSION =
+endif
 
 ###############################################################################
 
-# This is the target that compiles our executable
-compile: $(OBJS)
-	$(CXX) $(COMPILER_FLAGS) $(INCLUDE_PATHS) $(LINKER_PATHS) $(LINKER_FLAGS) $(OBJS) -o $(OUT_FOLDER)/$(OBJ_NAME)
-
-# This command run the executable
-run: $(OUT_FOLDER)/$(OBJ_NAME)
-	./$(OUT_FOLDER)/$(OBJ_NAME)
-
-# This command removes the previously created executable
-clean: $(OUT_FOLDER)/$(OBJ_NAME)
-	rm ./$(OUT_FOLDER)/$(OBJ_NAME)
-
 all:
 	make clean & make compile && make run
+
+compile: $(SRCDIR)/*.c
+	$(CC) $(CFLAGS) $(INCLUDE_PATHS) $(LINKER_PATHS) $(LINKER_FLAGS) $(SRCFILES) -o $(BUILDDIR)/$(TARGET)$(TARGET_EXTENSION)
+
+run: $(BUILDDIR)/$(TARGET)$(TARGET_EXTENSION)
+	./$(BUILDDIR)/$(TARGET)$(TARGET_EXTENSION)
+
+clean:
+	$(RM) $(BUILDDIR)/$(TARGET)$(TARGET_EXTENSION)
