@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "sprite.h"
 
 Rectangle load_frame_rec(Texture2D texture, int n_sprites)

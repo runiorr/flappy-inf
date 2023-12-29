@@ -1,28 +1,27 @@
-#include "raylib.h"
 #include <stdio.h>
 #include <stdbool.h>
+
+#include "raylib.h"
+
 #include "player.h"
 #include "sprite.h"
+#include "floor.h"
+#include "constants.h"
 
 int main(void)
 {
-    const int screenWidth = 1200;
-    const int screenHeight = 800;
-
     // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
-    InitWindow(screenWidth, screenHeight, "raylib [texture] example - sprite anim");
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "raylib [texture] example - sprite anim");
 
-    Texture2D background = LoadTexture("resources/scenario/background_day.png");
-    // Texture2D pipeTexture = LoadTexture("resources/obstaculo.png");
+    // TODO: Create background struct
+    // TODO: Add Parallax (bushes, buildings)
+    Texture2D background = LoadTexture("resources/scenario/background_day_full.png");
 
-    Image spriteImage = LoadImage("resources/flappy/flappy_mov_red.png");
-    Texture2D *textures = load_textures(spriteImage, 3);
-    Player player = {
-        .textures = textures,
-        .current = textures[0],
-        .position = {(float)screenWidth / 4, (float)screenHeight / 2},
-        .velocity = {0, 0},
-        .jumpSpeed = 8.0f};
+    Texture2D floorTexture = LoadTexture("resources/obstacles/floor_complete.png");
+
+    Image spriteImage = LoadImage("resources/flappy/flappy_mov_red_big.png");
+    Player player;
+    init_player(&player, spriteImage);
 
     int framesCounter = 0;
     int framesSpeed = 6; // Number of spritesheet frames shown by second
@@ -42,29 +41,26 @@ int main(void)
         {
             framesCounter = 0;
             currentFrame++;
-
             if (currentFrame > 2)
                 currentFrame = 0;
-
-            tick_frame(&player, currentFrame);
+            player_update_frame(&player, currentFrame);
         }
         //----------------------------------------------------------------------------------
 
         // Control player
         //----------------------------------------------------------------------------------
-        tick_input(&player);
+        player_update_position(&player);
         //----------------------------------------------------------------------------------
 
         // Draw textures
         //----------------------------------------------------------------------------------
         BeginDrawing();
-
+        // Background
         ClearBackground(RAYWHITE);
-
-        DrawTexture(background, screenWidth / 2 - background.width / 2, screenHeight / 2 - background.height / 2 - 40, WHITE);
-        tick_animation(&player, WHITE);
-
-        DrawText("FlappyINF", screenWidth - 250, screenHeight - 20, 10, GRAY);
+        DrawTexture(background, 0, -60, RAYWHITE);
+        // Player
+        player_animation(&player);
+        floor_draw(floorTexture);
 
         EndDrawing();
         //----------------------------------------------------------------------------------
@@ -72,14 +68,11 @@ int main(void)
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
-    UnloadTexture(background);
     UnloadImage(spriteImage);
+    deload_player(&player);
 
-    for (int i = 0; i < 3; i++)
-    {
-        UnloadTexture(textures[i]);
-    }
-    free(textures);
+    UnloadTexture(background);
+    UnloadTexture(floorTexture);
 
     CloseWindow(); // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
