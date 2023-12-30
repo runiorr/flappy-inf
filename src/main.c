@@ -3,25 +3,33 @@
 
 #include "raylib.h"
 
-#include "player.h"
-#include "sprite.h"
-#include "floor.h"
 #include "constants.h"
+#include "game.h"
+#include "floor.h"
+#include "background.h"
+#include "player.h"
 
 int main(void)
 {
     // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "raylib [texture] example - sprite anim");
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "FlappyInf");
 
-    // TODO: Create background struct
-    // TODO: Add Parallax (bushes, buildings)
-    Texture2D background = LoadTexture("resources/scenario/background_day_full.png");
+    Texture2D bushesTexture = LoadTexture("resources/scenario/bushes.png");
+    Texture2D buildingsTexture = LoadTexture("resources/scenario/buildings.png");
+    Texture2D cloudsTexture = LoadTexture("resources/scenario/clouds.png");
+    Background background;
+    init_background(&background, bushesTexture, buildingsTexture, cloudsTexture);
 
     Texture2D floorTexture = LoadTexture("resources/obstacles/floor_complete.png");
+    Floor floor;
+    init_floor(&floor, floorTexture);
 
-    Image spriteImage = LoadImage("resources/flappy/flappy_mov_red_big.png");
+    Image playerImage = LoadImage("resources/flappy/flappy_mov_red_big.png");
     Player player;
-    init_player(&player, spriteImage);
+    init_player(&player, playerImage);
+
+    GameState game;
+    init_game(&game, &floor, &player, &background);
 
     int framesCounter = 0;
     int framesSpeed = 6; // Number of spritesheet frames shown by second
@@ -55,12 +63,11 @@ int main(void)
         // Draw textures
         //----------------------------------------------------------------------------------
         BeginDrawing();
-        // Background
-        ClearBackground(RAYWHITE);
-        DrawTexture(background, 0, -60, RAYWHITE);
-        // Player
+        ClearBackground(WHITE);
+
+        background_draw(&game, &background);
         player_animation(&player);
-        floor_draw(floorTexture);
+        floor_draw(&game, &floor);
 
         EndDrawing();
         //----------------------------------------------------------------------------------
@@ -68,11 +75,12 @@ int main(void)
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
-    UnloadImage(spriteImage);
-    deload_player(&player);
-
-    UnloadTexture(background);
+    UnloadTexture(bushesTexture);
+    UnloadTexture(buildingsTexture);
+    UnloadTexture(cloudsTexture);
     UnloadTexture(floorTexture);
+    UnloadImage(playerImage);
+    deload_player(&player);
 
     CloseWindow(); // Close window and OpenGL context
     //--------------------------------------------------------------------------------------

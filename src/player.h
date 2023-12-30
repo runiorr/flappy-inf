@@ -1,28 +1,24 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <stdio.h>
 #include <stdbool.h>
-
-#include "raylib.h"
-
-#include "sprite.h"
 #include "constants.h"
+#include "sprite.h"
 
 typedef struct Player
 {
-    Texture2D *textures;
-    Texture2D current;
-    Vector2 position;
-    Vector2 velocity;
-    float jumpSpeed;
-    bool alive;
-    int spinDegree;
-    float tiltAngle;
-    Color color;
+	Texture2D *textures;
+	Texture2D current;
+	Vector2 position;
+	Vector2 velocity;
+	float jumpSpeed;
+	bool alive;
+	int spinDegree;
+	float tiltAngle;
+	Color color;
 } Player;
 
-void init_player(Player *p, Image spriteImage);
+void init_player(Player *p, Image playerImage);
 void deload_player(Player *p);
 // TODO: refatorar funcoes
 void player_update_frame(Player *p, int currentFrame);

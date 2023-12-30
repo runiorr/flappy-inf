@@ -10,7 +10,7 @@ void init_player(Player *p, Image spriteImage)
     p->jumpSpeed = 8.0f;
     p->alive = true;
     p->spinDegree = 1;
-    p->color = RAYWHITE;
+    p->color = WHITE;
 }
 
 void deload_player(Player *p)
