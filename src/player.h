@@ -12,6 +12,7 @@ typedef struct Player
 	Vector2 position;
 	Vector2 velocity;
 	float jumpSpeed;
+	bool isJumping;
 	bool alive;
 	int spinDegree;
 	float tiltAngle;

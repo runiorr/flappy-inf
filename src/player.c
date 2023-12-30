@@ -7,7 +7,8 @@ void init_player(Player *p, Image spriteImage)
     p->current = textures[0];
     p->position = (Vector2){(float)(SCREEN_WIDTH / 4), (float)(SCREEN_HEIGHT / 2)};
     p->velocity = (Vector2){0, 0};
-    p->jumpSpeed = 8.0f;
+    p->jumpSpeed = 10.0f;
+    p->isJumping = false;
     p->alive = true;
     p->spinDegree = 1;
     p->color = WHITE;
@@ -32,15 +33,23 @@ void player_update_frame(Player *p, int currentFrame)
 
 void player_update_position(Player *p)
 {
-    if (p->alive == true)
+    if (p->alive)
     {
-        if (IsKeyDown(KEY_SPACE))
+        if (IsKeyDown(KEY_SPACE) && !p->isJumping)
         {
             p->velocity.y = -p->jumpSpeed;
+            p->isJumping = true;
         }
+
+        if (p->isJumping && p->velocity.y > 0)
+        {
+            p->isJumping = false;
+        }
+
         p->velocity.y += 0.5f; // Gravity
         p->position.y += p->velocity.y;
 
+        // If hits floor, stop moving
         if (p->position.y >= (SCREEN_HEIGHT - FLOOR_HEIGHT))
         {
             p->alive = false;
