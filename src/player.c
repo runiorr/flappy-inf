@@ -5,7 +5,7 @@ void init_player(Player *p, Image spriteImage)
     Texture2D *textures = load_textures(spriteImage, 3);
     p->textures = textures;
     p->current = textures[0];
-    p->position = (Vector2){(float)(SCREEN_WIDTH / 4), (float)(SCREEN_HEIGHT / 2)};
+    p->position = (Vector2){PLAYER_START_POSITION_X, PLAYER_START_POSITION_Y};
     p->velocity = (Vector2){0, 0};
     p->jumpSpeed = 10.0f;
     p->isJumping = false;
