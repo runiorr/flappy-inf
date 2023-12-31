@@ -8,9 +8,12 @@
 #include "floor.h"
 #include "background.h"
 #include "player.h"
+#include "pipe.h"
 
 int main(void)
 {
+    // TODO : GetScreenWidth()
+    // TODO : use const
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "FlappyInf");
     InitAudioDevice();
 
@@ -23,6 +26,12 @@ int main(void)
     Texture2D floorTexture = LoadTexture("resources/obstacles/floor_complete.png");
     Floor floor;
     init_floor(&floor, floorTexture);
+
+    // receive external configuration
+    Texture2D bottomPipeTexture = LoadTexture("resources/obstacles/bottomPipe.png");
+    Texture2D topPipeTexture = LoadTexture("resources/obstacles/topPipe.png");
+    PipeManager pipeManager;
+    init_pipe_manager(&pipeManager, bottomPipeTexture, topPipeTexture);
 
     Image playerImage = LoadImage("resources/flappy/flappy_mov_red_big.png");
     Player player;
@@ -44,14 +53,19 @@ int main(void)
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
+        // States
+        //----------------------------------------------------------------------------------
+        // TODO
+        //----------------------------------------------------------------------------------
+
         // Sounds
         //----------------------------------------------------------------------------------
         game_sounds(&game, deathSound, backgroundMusic);
         //----------------------------------------------------------------------------------
+
         // Update texture frame
         //----------------------------------------------------------------------------------
         framesCounter++;
-
         if (framesCounter >= (60 / framesSpeed))
         {
             framesCounter = 0;
@@ -62,9 +76,10 @@ int main(void)
         }
         //----------------------------------------------------------------------------------
 
-        // Control player
+        // Update positions
         //----------------------------------------------------------------------------------
         player_update_position(&player);
+        pipe_update_position(&game, &pipeManager);
         //----------------------------------------------------------------------------------
 
         // Draw textures
@@ -73,8 +88,9 @@ int main(void)
         ClearBackground(WHITE);
 
         background_draw(&game, &background);
-        player_animation(&player);
+        pipe_draw(&pipeManager);
         floor_draw(&game, &floor);
+        player_animation(&player);
 
         EndDrawing();
         //----------------------------------------------------------------------------------
@@ -86,6 +102,8 @@ int main(void)
     UnloadTexture(buildingsTexture);
     UnloadTexture(cloudsTexture);
     UnloadTexture(floorTexture);
+    UnloadTexture(bottomPipeTexture);
+    UnloadTexture(topPipeTexture);
     UnloadImage(playerImage);
     deload_player(&player);
 
