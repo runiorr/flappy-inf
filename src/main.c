@@ -27,7 +27,7 @@ int main(void)
     Floor floor;
     init_floor(&floor, floorTexture);
 
-    // receive external configuration
+    // TODO: receive external configuration
     Texture2D bottomPipeTexture = LoadTexture("resources/obstacles/bottomPipe.png");
     Texture2D topPipeTexture = LoadTexture("resources/obstacles/topPipe.png");
     PipeManager pipeManager;
@@ -55,15 +55,17 @@ int main(void)
     {
         // States
         //----------------------------------------------------------------------------------
-        // TODO
+        // TODO: Configure states (Menu, score, difficulty)
         //----------------------------------------------------------------------------------
 
         // Sounds
         //----------------------------------------------------------------------------------
+        // TODO: Coin, power ups
         game_sounds(&game, deathSound, backgroundMusic);
         //----------------------------------------------------------------------------------
 
         // Update texture frame
+        // TODO: Refactor
         //----------------------------------------------------------------------------------
         framesCounter++;
         if (framesCounter >= (60 / framesSpeed))
