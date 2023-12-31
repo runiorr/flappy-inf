@@ -13,7 +13,7 @@ void game_sounds(GameState *g, Sound deathSound, Sound backgroundMusic)
     {
         if (!IsSoundPlaying(backgroundMusic))
         {
-            SetSoundVolume(backgroundMusic, 0.25);
+            SetSoundVolume(backgroundMusic, 0.1);
             PlaySound(backgroundMusic);
         }
     }
