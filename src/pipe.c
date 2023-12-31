@@ -19,22 +19,20 @@ void init_pipe_manager(PipeManager *pipeManager, Texture2D bottomPipeTexture, Te
 
 	for (int i = 0; i < MAX_PIPE_COUNT; i++)
 	{
-		pipeManager->pipes[i] = _generate_pipe(pipeManager, i);
+		Pipe pipe;
+		_random_pipe(pipeManager, &pipe, i);
+		pipeManager->pipes[i] = pipe;
 	}
 }
 
-Pipe _generate_pipe(PipeManager *pipeManager, int i)
+void _random_pipe(PipeManager *pipeManager, Pipe *pipe, int i)
 {
 	float topPipeHeight = GetRandomValue(0, GetScreenHeight() / 2);
-
-	Pipe pipe;
-	pipe.topPipeStart = (0 - GetScreenHeight()) + topPipeHeight;
-	pipe.bottomPipeStart = topPipeHeight + pipeManager->gap;
-	pipe.x = (GetScreenWidth() / 2) + (pipeManager->offset * i);
-	pipe.jumped = false;
-	pipe.visible = true;
-
-	return pipe;
+	pipe->topPipeStart = (0 - GetScreenHeight()) + topPipeHeight;
+	pipe->bottomPipeStart = topPipeHeight + pipeManager->gap;
+	pipe->x = (GetScreenWidth() / 2) + (pipeManager->offset * i);
+	pipe->jumped = false;
+	pipe->visible = true;
 }
 
 void pipe_update_position(void *g, PipeManager *pipeManager)
@@ -52,6 +50,7 @@ void pipe_update_position(void *g, PipeManager *pipeManager)
 			// Verifique se o tubo foi passado para gerar novo
 			if (pipeManager->pipes[i].x <= 0)
 			{
+				_random_pipe(pipeManager, &pipeManager->pipes[i], 0);
 				pipeManager->pipes[i].x = GetScreenWidth() + (2 * pipeManager->offset);
 			}
 		}

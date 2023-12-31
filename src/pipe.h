@@ -37,7 +37,7 @@ typedef struct PipeManager
 
 void init_pipe_manager(PipeManager *pipeManager, Texture2D bottomPipeTexture, Texture2D topPipeTexture);
 
-Pipe _generate_pipe(PipeManager *pipeManager, int i);
+void _random_pipe(PipeManager *pipeManager, Pipe *pipe, int i);
 
 void pipe_update_position(void *g, PipeManager *pipeManager);
 
