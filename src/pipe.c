@@ -37,21 +37,30 @@ void _random_pipe(PipeManager *pipeManager, Pipe *pipe, int i)
 
 void pipe_update_position(void *g, PipeManager *pipeManager)
 {
-	GameState *game = (GameState *)g;
+	GameState *gameState = (GameState *)g;
 
 	// TODO: PARAR AO MORRER
-	if (game->player->alive)
+	if (gameState->player->alive)
 	{
 		for (int i = 0; i < MAX_PIPE_COUNT; i++)
 		{
 			// Atualizar posição dos tubos
 			pipeManager->pipes[i].x -= pipeManager->obstacleVelocity;
+			Pipe pipe = pipeManager->pipes[i];
 
 			// Verifique se o tubo foi passado para gerar novo
-			if (pipeManager->pipes[i].x <= 0)
+			// TODO: Ajustar valor que soma com offset e quantidade de canos
+			// TODO: Adicionar animacao para ele sumindo
+			if (pipe.x <= 0)
 			{
-				_random_pipe(pipeManager, &pipeManager->pipes[i], 0);
+				_random_pipe(pipeManager, &pipe, 0);
 				pipeManager->pipes[i].x = GetScreenWidth() + (2 * pipeManager->offset);
+			}
+
+			// Verifica se acertou cano
+			if (_pipe_collision(gameState, pipeManager, pipe))
+			{
+				gameState->player->alive = false;
 			}
 		}
 	}
@@ -70,7 +79,27 @@ void pipe_draw(PipeManager *pipeManager)
 	}
 }
 
-// bool CheckCollision(void)
-// {
-//     // TODO: Implemente a lógica de detecção de colisão aqui
-// }
+bool _pipe_collision(GameState *gameState, PipeManager *pipeManager, Pipe pipe)
+{
+	Player *p = gameState->player;
+	// Menos 20%
+	int playerWidth = p->current.width - (p->current.width / 10 * 2);
+	int playerHeight = p->current.height - (p->current.height / 10 * 2);
+
+	// Offset para erro da posicao X
+	int pipeX = pipe.x + 40;
+	// Menos 20%
+	int pipeWidth = pipeManager->topPipeTexture.width - (pipeManager->topPipeTexture.width / 10 * 2);
+
+	int topPipeY = pipe.topPipeStart + 20;
+	int topPipeHeight = pipeManager->topPipeTexture.height;
+
+	int bottomPipeY = pipe.bottomPipeStart + 30;
+	int bottomPipeHeight = pipeManager->bottomPipeTexture.height;
+
+	Rectangle player = {p->position.x, p->position.y, playerWidth, playerHeight};
+	Rectangle bottomPipe = {pipeX, bottomPipeY, pipeWidth, bottomPipeHeight};
+	Rectangle topPipe = {pipeX, topPipeY, pipeWidth, topPipeHeight};
+
+	return (CheckCollisionRecs(bottomPipe, player) || CheckCollisionRecs(topPipe, player));
+}

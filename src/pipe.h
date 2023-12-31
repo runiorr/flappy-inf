@@ -28,7 +28,8 @@ typedef struct PipeManager
     int incObstacleVelocity;
 } PipeManager;
 
-// gap: indica o espaço livre inicial nos obstáculos para o jogador passar (em pixels)
+// TODO: Implementar parametros dentro do pipeManager
+// ★ gap: indica o espaço livre inicial nos obstáculos para o jogador passar (em pixels)
 // ★ inc_gap: indica o quanto o gap deve ser reduzido a cada incremento de dificuldade. (em pixels)
 // ★ dif_max_altura: indica a diferença máxima de altura inicial entre obstáculos consecutivos. (em pixels)
 // ★ inc_dif_max_altura: indica o quanto a dif_max_altura deve ser incrementada a cada aumento de dificuldade. (em pixels)
@@ -39,10 +40,10 @@ void init_pipe_manager(PipeManager *pipeManager, Texture2D bottomPipeTexture, Te
 
 void _random_pipe(PipeManager *pipeManager, Pipe *pipe, int i);
 
-void pipe_update_position(void *g, PipeManager *pipeManager);
+void pipe_update_position(void *gameState, PipeManager *pipeManager);
 
 void pipe_draw(PipeManager *pipeManager);
 
-// bool CheckCollision(void);
+bool _pipe_collision(GameState *gameState, PipeManager *pipeManager, Pipe pipe);
 
 #endif // PIPE_H
