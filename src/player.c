@@ -8,7 +8,6 @@ void init_player(Player *p, Image spriteImage)
     p->position = (Vector2){PLAYER_START_POSITION_X, PLAYER_START_POSITION_Y};
     p->velocity = (Vector2){0, 0};
     p->jumpSpeed = 10.0f;
-    p->isJumping = false;
     p->alive = true;
     p->spinDegree = 0;
     p->tiltAngle = 0;
@@ -36,15 +35,9 @@ void player_update_position(Player *p)
 {
     if (p->alive)
     {
-        if (IsKeyDown(KEY_SPACE) && !p->isJumping)
+        if (IsKeyPressed(KEY_SPACE))
         {
             p->velocity.y = -p->jumpSpeed;
-            p->isJumping = true;
-        }
-
-        if (p->isJumping && p->velocity.y > 0)
-        {
-            p->isJumping = false;
         }
 
         p->velocity.y += 0.5f; // Gravity
