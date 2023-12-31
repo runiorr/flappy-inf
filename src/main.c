@@ -11,8 +11,8 @@
 
 int main(void)
 {
-    // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "FlappyInf");
+    InitAudioDevice();
 
     Texture2D bushesTexture = LoadTexture("resources/scenario/bushes.png");
     Texture2D buildingsTexture = LoadTexture("resources/scenario/buildings.png");
@@ -31,6 +31,9 @@ int main(void)
     GameState game;
     init_game(&game, &floor, &player, &background);
 
+    Sound deathSound = LoadSound("resources/audio/evil_laugh_edit.mp3");
+    Sound backgroundMusic = LoadSound("resources/audio/bg_music.mp3");
+
     int framesCounter = 0;
     int framesSpeed = 6; // Number of spritesheet frames shown by second
     int currentFrame = 0;
@@ -41,6 +44,10 @@ int main(void)
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
+        // Sounds
+        //----------------------------------------------------------------------------------
+        game_sounds(&game, deathSound, backgroundMusic);
+        //----------------------------------------------------------------------------------
         // Update texture frame
         //----------------------------------------------------------------------------------
         framesCounter++;
@@ -82,7 +89,11 @@ int main(void)
     UnloadImage(playerImage);
     deload_player(&player);
 
-    CloseWindow(); // Close window and OpenGL context
+    UnloadSound(backgroundMusic);
+    UnloadSound(deathSound);
+
+    CloseAudioDevice();
+    CloseWindow();
     //--------------------------------------------------------------------------------------
 
     return 0;

@@ -10,7 +10,8 @@ void init_player(Player *p, Image spriteImage)
     p->jumpSpeed = 10.0f;
     p->isJumping = false;
     p->alive = true;
-    p->spinDegree = 1;
+    p->spinDegree = 0;
+    p->tiltAngle = 0;
     p->color = WHITE;
 }
 
@@ -76,21 +77,25 @@ void player_animation(Player *p)
         }
         else
         {
-            p->color.a -= 4;
+            p->color.a -= 2.5;
         }
         // Spinning
         p->tiltAngle = ((p->velocity.y - p->spinDegree) / 10.0f) * 30.0f;
         if (p->tiltAngle <= -90 && p->tiltAngle > -180)
         {
-            p->spinDegree += 6;
+            p->spinDegree += 2;
         }
         else if (p->tiltAngle <= -180 && p->tiltAngle > -270)
         {
-            p->spinDegree += 12;
+            p->spinDegree += 6;
         }
-        else if (p->tiltAngle <= -270)
+        else if (p->tiltAngle <= -270 && p->tiltAngle > -360)
         {
-            p->spinDegree += 28;
+            p->spinDegree += 9;
+        }
+        else if (p->tiltAngle <= -360)
+        {
+            p->spinDegree += 12;
         }
 
         Rectangle source = {0, 0, p->current.width, p->current.height};
