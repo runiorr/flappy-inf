@@ -46,19 +46,18 @@ void pipe_update_position(void *g, PipeManager *pipeManager)
 		{
 			// Atualizar posição dos tubos
 			pipeManager->pipes[i].x -= pipeManager->obstacleVelocity;
-			Pipe pipe = pipeManager->pipes[i];
 
 			// Verifique se o tubo foi passado para gerar novo
 			// TODO: Ajustar valor que soma com offset e quantidade de canos
 			// TODO: Adicionar animacao para ele sumindo
-			if (pipe.x <= 0)
+			if (pipeManager->pipes[i].x <= 0)
 			{
-				_random_pipe(pipeManager, &pipe, 0);
+				_random_pipe(pipeManager, &pipeManager->pipes[i], 0);
 				pipeManager->pipes[i].x = GetScreenWidth() + (2 * pipeManager->offset);
 			}
 
 			// Verifica se acertou cano
-			if (_pipe_collision(gameState, pipeManager, pipe))
+			if (_pipe_collision(gameState, pipeManager, pipeManager->pipes[i]))
 			{
 				gameState->player->alive = false;
 			}
