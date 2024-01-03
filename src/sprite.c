@@ -1,15 +1,9 @@
 #include "sprite.h"
 
-Rectangle load_frame_rec(Texture2D texture, int n_sprites)
-{
-    Rectangle frameRec = {0.0f, 0.0f, texture.width / n_sprites, texture.height};
-    return frameRec;
-}
-
 Texture2D *load_textures(Image image, int n_sprites)
 {
     Texture2D tmpTexture = LoadTextureFromImage(image);
-    Rectangle frameRec = load_frame_rec(tmpTexture, n_sprites);
+    Rectangle frameRec = {0.0f, 0.0f, tmpTexture.width / n_sprites, tmpTexture.height};
     Texture2D *textures = (Texture2D *)malloc(n_sprites * sizeof(Texture2D));
 
     for (int i = 0; i < n_sprites; i++)
