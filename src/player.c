@@ -69,7 +69,7 @@ void player_animation(Player *p)
 {
     if (p->alive)
     {
-        float tiltAngle = (p->velocity.y / 10.0f) * 30.0f;
+        float tiltAngle = p->velocity.y * 4.0;
         Rectangle source = {0, 0, p->current.width, p->current.height};
         Rectangle dest = {p->position.x, p->position.y, p->current.width, p->current.height};
         Vector2 origin = {p->current.width / 2, p->current.height / 2};
