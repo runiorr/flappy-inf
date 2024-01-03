@@ -92,7 +92,6 @@ int main(void)
         BeginDrawing();
         ClearBackground(WHITE);
 
-        // TODO: Rename draw to animation
         background_animation(&background);
         pipe_animation(&pipeManager);
         floor_animation(&floor);
