@@ -7,7 +7,7 @@ void init_floor(Floor *f, Texture2D floorTexture)
     f->scrollOffset = 0.0f;
 }
 
-void floor_draw(void *g, Floor *f)
+void floor_movement(void *g, Floor *f)
 {
     GameState *game = (GameState *)g;
     if (game->player->alive)
@@ -19,6 +19,10 @@ void floor_draw(void *g, Floor *f)
             f->scrollOffset = 0.0f;
         }
     }
+}
+
+void floor_animation(Floor *f)
+{
     DrawTextureEx(f->texture, (Vector2){-f->scrollOffset, SCREEN_HEIGHT - f->texture.height}, 0.0f, 1.0f, WHITE);
     DrawTextureEx(f->texture, (Vector2){f->texture.width - f->scrollOffset, SCREEN_HEIGHT - f->texture.height}, 0.0f, 1.0f, WHITE);
 }

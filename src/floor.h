@@ -12,6 +12,9 @@ typedef struct Floor
 } Floor;
 
 void init_floor(Floor *f, Texture2D floorTexture);
-void floor_draw(void *g, Floor *f);
+
+void floor_movement(void *g, Floor *f);
+
+void floor_animation(Floor *f);
 
 #endif /* FLOOR_H */

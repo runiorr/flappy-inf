@@ -10,7 +10,6 @@
 #include "background.h"
 #include "player.h"
 #include "pipe.h"
-#include "pubsub.h"
 
 // TODO: add DEBUG INFO through args
 // int main( int argc, char **argv )
@@ -81,8 +80,10 @@ int main(void)
 
         // Update positions
         //----------------------------------------------------------------------------------
-        player_movement(&game, &player);
+        background_movement(&game, &background);
         pipe_movement(&game, &pipeManager);
+        floor_movement(&game, &floor);
+        player_movement(&game, &player);
         // Publish(EVENT_MOVEMENT, GRAVITY, &game);
         //----------------------------------------------------------------------------------
 
@@ -91,11 +92,10 @@ int main(void)
         BeginDrawing();
         ClearBackground(WHITE);
 
-        // TODO: Remove offset update from animation method
         // TODO: Rename draw to animation
-        background_draw(&game, &background);
-        pipe_draw(&pipeManager);
-        floor_draw(&game, &floor);
+        background_animation(&background);
+        pipe_animation(&pipeManager);
+        floor_animation(&floor);
         player_animation(&player);
 
         EndDrawing();

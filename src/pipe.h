@@ -42,7 +42,7 @@ void _random_pipe(PipeManager *pipeManager, Pipe *pipe, int i);
 
 void pipe_movement(void *gameState, PipeManager *pipeManager);
 
-void pipe_draw(PipeManager *pipeManager);
+void pipe_animation(PipeManager *pipeManager);
 
 bool _pipe_collision(GameState *gameState, PipeManager *pipeManager, Pipe pipe);
 

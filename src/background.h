@@ -21,6 +21,9 @@ void init_background(Background *b,
                      Texture2D bushesTexture,
                      Texture2D buildingsTexture,
                      Texture2D cloudsTexture);
-void background_draw(void *g, Background *b);
+
+void background_movement(void *g, Background *b);
+
+void background_animation(Background *b);
 
 #endif /* BACKGROUND_H */

@@ -71,7 +71,7 @@ void pipe_movement(void *g, PipeManager *pipeManager)
 	}
 }
 
-void pipe_draw(PipeManager *pipeManager)
+void pipe_animation(PipeManager *pipeManager)
 {
 	for (int i = 0; i < MAX_PIPE_COUNT; i++)
 	{

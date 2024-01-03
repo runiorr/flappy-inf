@@ -16,7 +16,7 @@ void init_background(Background *b,
     b->cloudsScrollOffset = 0.0f;
 }
 
-void background_draw(void *g, Background *b)
+void background_movement(void *g, Background *b)
 {
     GameState *game = (GameState *)g;
 
@@ -41,7 +41,10 @@ void background_draw(void *g, Background *b)
             b->cloudsScrollOffset = 0.0f;
         }
     }
+}
 
+void background_animation(Background *b)
+{
     int cloudsHeight = 0;
     int buildingsHeight = 285;
     int bushesHeight = 380;
