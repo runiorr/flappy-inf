@@ -23,7 +23,7 @@ void init_player(Player *p, Image playerImage);
 void deload_player(Player *p);
 
 // TODO: refatorar funcoes
-void player_update_frame(Player *p, int currentFrame);
+void player_update_frame(Player *p, int *framesCounter, int *currentFrame);
 
 void player_movement(void *g, Player *p);
 

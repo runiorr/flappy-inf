@@ -2,6 +2,8 @@
 #include "pubsub.h"
 
 #define NUMBER_SPRITES 3
+#define FRAMES_SPEED 6
+
 typedef struct GameState
 {
     float gravity;
@@ -27,11 +29,20 @@ void deload_player(Player *p)
     unload_textures(p->textures, NUMBER_SPRITES);
 }
 
-void player_update_frame(Player *p, int currentFrame)
+void player_update_frame(Player *p, int *framesCounter, int *currentFrame)
 {
     if (p->alive)
     {
-        p->current = p->textures[currentFrame];
+        (*framesCounter)++;
+        if (*framesCounter >= (60 / FRAMES_SPEED))
+        {
+            *framesCounter = 0;
+            (*currentFrame)++;
+            if (*currentFrame > 2)
+                *currentFrame = 0;
+
+            p->current = p->textures[*currentFrame];
+        }
     }
 }
 

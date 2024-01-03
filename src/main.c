@@ -52,7 +52,6 @@ int main(void)
     // Subscribe(EVENT_MOVEMENT, &HandleMovement);
 
     int framesCounter = 0;
-    int framesSpeed = 6; // Number of spritesheet frames shown by second
     int currentFrame = 0;
 
     SetTargetFPS(60);
@@ -76,17 +75,8 @@ int main(void)
         //----------------------------------------------------------------------------------
 
         // Update texture frame
-        // TODO: Refactor
         //----------------------------------------------------------------------------------
-        framesCounter++;
-        if (framesCounter >= (60 / framesSpeed))
-        {
-            framesCounter = 0;
-            currentFrame++;
-            if (currentFrame > 2)
-                currentFrame = 0;
-            player_update_frame(&player, currentFrame);
-        }
+        player_update_frame(&player, &framesCounter, &currentFrame);
         //----------------------------------------------------------------------------------
 
         // Update positions
