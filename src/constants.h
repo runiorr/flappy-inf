@@ -9,6 +9,7 @@
 
 #define FLOOR_HEIGHT 180
 
-#define MAX_PIPE_COUNT 6
+#define MAX_PIPE_COUNT 7
+#define LAST_PIPE MAX_PIPE_COUNT - 1
 
 #endif /* CONSTANTS_H */

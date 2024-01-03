@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 
 #include "raylib.h"
 
@@ -9,7 +10,10 @@
 #include "background.h"
 #include "player.h"
 #include "pipe.h"
+#include "pubsub.h"
 
+// TODO: add DEBUG INFO through args
+// int main( int argc, char **argv )
 int main(void)
 {
     // TODO : GetScreenWidth()
@@ -37,11 +41,15 @@ int main(void)
     Player player;
     init_player(&player, playerImage);
 
+    // TODO: Use gameState everywhere (headers, methods)
     GameState game;
     init_game(&game, &floor, &player, &background);
 
     Sound deathSound = LoadSound("resources/audio/evil_laugh_edit.mp3");
     Sound backgroundMusic = LoadSound("resources/audio/bg_music.mp3");
+
+    // Subscribe(EVENT_COLLISION, &HandleCollision);
+    // Subscribe(EVENT_MOVEMENT, &HandleMovement);
 
     int framesCounter = 0;
     int framesSpeed = 6; // Number of spritesheet frames shown by second
@@ -80,8 +88,9 @@ int main(void)
 
         // Update positions
         //----------------------------------------------------------------------------------
-        player_update_position(&player);
-        pipe_update_position(&game, &pipeManager);
+        player_movement(&game, &player);
+        pipe_movement(&game, &pipeManager);
+        // Publish(EVENT_MOVEMENT, GRAVITY, &game);
         //----------------------------------------------------------------------------------
 
         // Draw textures

@@ -1,5 +1,6 @@
-#include "pipe.h"
 #include <stdio.h>
+#include "pipe.h"
+#include "pubsub.h"
 
 void init_pipe_manager(PipeManager *pipeManager, Texture2D bottomPipeTexture, Texture2D topPipeTexture)
 {
@@ -35,7 +36,7 @@ void _random_pipe(PipeManager *pipeManager, Pipe *pipe, int i)
 	pipe->visible = true;
 }
 
-void pipe_update_position(void *g, PipeManager *pipeManager)
+void pipe_movement(void *g, PipeManager *pipeManager)
 {
 	GameState *gameState = (GameState *)g;
 
@@ -47,11 +48,15 @@ void pipe_update_position(void *g, PipeManager *pipeManager)
 			// Atualizar posição dos tubos
 			pipeManager->pipes[i].x -= pipeManager->obstacleVelocity;
 
-			// Verifique se o tubo foi passado para gerar novo
-			// TODO: Ajustar valor que soma com offset e quantidade de canos
 			// TODO: Adicionar animacao para ele sumindo
-			if (pipeManager->pipes[i].x <= 0)
+			// Verifique se o tubo foi passado para gerar novo
+			// Quando o cano chegar no eixo X = 0, ele ira se tornar o ultimo cano da lista
+			// E um novo cano sera gerado em sua posicao da lista, com novos valores
+			if (pipeManager->pipes[i].x == 0)
 			{
+				pipeManager->pipes[LAST_PIPE].bottomPipeStart = pipeManager->pipes[i].bottomPipeStart;
+				pipeManager->pipes[LAST_PIPE].topPipeStart = pipeManager->pipes[i].topPipeStart;
+				pipeManager->pipes[LAST_PIPE].x = pipeManager->pipes[i].x;
 				_random_pipe(pipeManager, &pipeManager->pipes[i], 0);
 				pipeManager->pipes[i].x = GetScreenWidth() + (2 * pipeManager->offset);
 			}
@@ -59,7 +64,8 @@ void pipe_update_position(void *g, PipeManager *pipeManager)
 			// Verifica se acertou cano
 			if (_pipe_collision(gameState, pipeManager, pipeManager->pipes[i]))
 			{
-				gameState->player->alive = false;
+				// Publish(EVENT_COLLISION, PIPE, gameState);
+				_player_dead(gameState->player);
 			}
 		}
 	}

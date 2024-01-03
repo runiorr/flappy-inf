@@ -19,10 +19,24 @@ typedef struct Player
 } Player;
 
 void init_player(Player *p, Image playerImage);
+
 void deload_player(Player *p);
+
 // TODO: refatorar funcoes
 void player_update_frame(Player *p, int currentFrame);
-void player_update_position(Player *p);
+
+void player_movement(void *g, Player *p);
+
 void player_animation(Player *p);
+
+void _player_update_position(Player *p);
+
+void _player_jump(Player *p);
+
+void _player_gravity(Player *p, float gravity);
+
+bool _player_hits_floor(Player *p);
+
+void _player_dead(Player *p);
 
 #endif /* PLAYER_H */

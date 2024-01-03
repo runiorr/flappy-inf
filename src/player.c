@@ -1,4 +1,11 @@
 #include "player.h"
+#include "pubsub.h"
+
+typedef struct GameState
+{
+    float gravity;
+    Player *player;
+} GameState;
 
 void init_player(Player *p, Image spriteImage)
 {
@@ -31,23 +38,22 @@ void player_update_frame(Player *p, int currentFrame)
     }
 }
 
-void player_update_position(Player *p)
+void player_movement(void *g, Player *p)
 {
+    GameState *gameState = (GameState *)g;
+
     if (p->alive)
     {
         if (IsKeyPressed(KEY_SPACE))
-        {
-            p->velocity.y = -p->jumpSpeed;
-        }
+            _player_jump(p);
 
-        p->velocity.y += 0.5f; // Gravity
-        p->position.y += p->velocity.y;
+        // TODO: Change to pubsub if have more objects
+        _player_gravity(p, gameState->gravity);
+        _player_update_position(p);
 
-        // If hits floor, stop moving
-        if (p->position.y >= (SCREEN_HEIGHT - FLOOR_HEIGHT))
-        {
-            p->alive = false;
-        }
+        if (_player_hits_floor(p))
+            _player_dead(gameState->player);
+        // Publish(EVENT_COLLISION, GROUND, gameState);
     }
 }
 
@@ -97,4 +103,29 @@ void player_animation(Player *p)
         DrawTexturePro(p->current, source, dest, origin, p->tiltAngle, p->color);
         p->spinDegree++;
     }
+}
+
+void _player_update_position(Player *p)
+{
+    p->position.y += p->velocity.y;
+}
+
+void _player_jump(Player *p)
+{
+    p->velocity.y = -p->jumpSpeed;
+}
+
+void _player_gravity(Player *p, float gravity)
+{
+    p->velocity.y += gravity;
+}
+
+bool _player_hits_floor(Player *p)
+{
+    return (p->position.y >= (SCREEN_HEIGHT - FLOOR_HEIGHT));
+}
+
+void _player_dead(Player *p)
+{
+    p->alive = false;
 }

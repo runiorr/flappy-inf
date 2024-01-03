@@ -2,6 +2,7 @@
 
 void init_game(GameState *g, Floor *f, Player *p, Background *b)
 {
+    g->gravity = 0.5f;
     g->floor = f;
     g->player = p;
     g->background = b;

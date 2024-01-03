@@ -40,7 +40,7 @@ void init_pipe_manager(PipeManager *pipeManager, Texture2D bottomPipeTexture, Te
 
 void _random_pipe(PipeManager *pipeManager, Pipe *pipe, int i);
 
-void pipe_update_position(void *gameState, PipeManager *pipeManager);
+void pipe_movement(void *gameState, PipeManager *pipeManager);
 
 void pipe_draw(PipeManager *pipeManager);
 
