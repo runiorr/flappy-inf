@@ -61,11 +61,15 @@ void pipe_movement(void *g, PipeManager *pipeManager)
 				pipeManager->pipes[i].x = GetScreenWidth() + (2 * pipeManager->offset);
 			}
 
-			// Verifica se acertou cano
-			if (_pipe_collision(gameState, pipeManager, pipeManager->pipes[i]))
+			// Verifica se acertou cano para cada cano perto do jogador
+			bool pipeCloseToPlayer = pipeManager->pipes[i].x < (PLAYER_START_POSITION_X + 50) && pipeManager->pipes[i].x > (PLAYER_START_POSITION_X - 50);
+			if (pipeCloseToPlayer)
 			{
-				// Publish(EVENT_COLLISION, PIPE, gameState);
-				_player_dead(gameState->player);
+				if (_pipe_collision(gameState, pipeManager, pipeManager->pipes[i]))
+				{
+					// Publish(EVENT_COLLISION, PIPE, gameState);
+					_player_dead(gameState->player);
+				}
 			}
 		}
 	}
