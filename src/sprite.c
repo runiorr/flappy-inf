@@ -12,7 +12,7 @@ Texture2D *load_textures(Image image, int n_sprites)
         Texture2D frameTexture = LoadTextureFromImage(croppedImage);
         UnloadImage(croppedImage);
         textures[i] = frameTexture;
-        frameRec.x = (float)(i + 1) * (tmpTexture.width / n_sprites);
+        frameRec.x = (i + 1) * (tmpTexture.width / n_sprites);
     }
     UnloadTexture(tmpTexture);
     return textures;
