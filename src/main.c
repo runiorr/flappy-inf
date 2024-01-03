@@ -79,8 +79,8 @@ int main(void)
     //--------------------------------------------------------------------------------------
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
-        //  Reinicia o jogo se pressionar 'Q'
-        if (IsKeyPressed(KEY_Q))
+        //  Reinicia o jogo se pressionar 'R'
+        if (IsKeyPressed(KEY_R))
             restart_game(&game, &pipeManager);
 
         // TODO: Add deltaTime to decouple FPS from logic
