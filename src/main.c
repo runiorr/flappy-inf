@@ -59,11 +59,14 @@ int main(void)
     //--------------------------------------------------------------------------------------
 
     // Main game loop
+    // TODO: Restart game function
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
+        // TODO: Add deltaTime to decouple FPS from logic
         // States
         //----------------------------------------------------------------------------------
         // TODO: Configure states (Menu, score, difficulty)
+        // game_update_state(&game);
         //----------------------------------------------------------------------------------
 
         // Sounds
@@ -98,6 +101,8 @@ int main(void)
         BeginDrawing();
         ClearBackground(WHITE);
 
+        // TODO: Remove offset update from animation method
+        // TODO: Rename draw to animation
         background_draw(&game, &background);
         pipe_draw(&pipeManager);
         floor_draw(&game, &floor);

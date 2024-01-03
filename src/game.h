@@ -15,6 +15,8 @@ typedef struct GameState
 
 void init_game(GameState *g, Floor *f, Player *p, Background *b);
 
+// void game_update_state(GameState *g);
+
 void game_sounds(GameState *g, Sound deathSound, Sound backgroundMusic);
 
 #endif /* GAMESTATE_H */
