@@ -34,6 +34,8 @@ void restart_game(GameState *gameState, PipeManager *pipeManager)
 int main(void)
 {
     // TODO : use const
+    // Initialization
+    //--------------------------------------------------------------------------------------
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "FlappyInf");
     InitAudioDevice();
 
@@ -69,11 +71,12 @@ int main(void)
 
     int framesCounter = 0;
     int currentFrame = 0;
-
-    SetTargetFPS(60);
     //--------------------------------------------------------------------------------------
 
+    SetTargetFPS(60);
+
     // Main game loop
+    //--------------------------------------------------------------------------------------
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
         //  Reinicia o jogo se pressionar 'Q'
@@ -120,6 +123,7 @@ int main(void)
         EndDrawing();
         //----------------------------------------------------------------------------------
     }
+    //----------------------------------------------------------------------------------
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
