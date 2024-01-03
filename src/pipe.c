@@ -40,7 +40,6 @@ void pipe_movement(void *g, PipeManager *pipeManager)
 {
 	GameState *gameState = (GameState *)g;
 
-	// TODO: PARAR AO MORRER
 	if (gameState->player->alive)
 	{
 		for (int i = 0; i < MAX_PIPE_COUNT; i++)
