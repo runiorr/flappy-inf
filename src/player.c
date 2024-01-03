@@ -130,7 +130,7 @@ void _player_gravity(Player *p, float gravity)
 
 bool _player_hits_floor(Player *p)
 {
-    return (p->position.y >= (SCREEN_HEIGHT - FLOOR_HEIGHT));
+    return (p->position.y >= (GetScreenHeight() - FLOOR_HEIGHT));
 }
 
 void _player_dead(Player *p)

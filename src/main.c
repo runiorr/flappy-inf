@@ -33,7 +33,6 @@ void restart_game(GameState *gameState, PipeManager *pipeManager)
 // TODO: add DEBUG INFO through args ---> int main( int argc, char **argv )
 int main(void)
 {
-    // TODO : GetScreenWidth()
     // TODO : use const
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "FlappyInf");
     InitAudioDevice();

@@ -23,6 +23,6 @@ void floor_movement(void *g, Floor *f)
 
 void floor_animation(Floor *f)
 {
-    DrawTextureEx(f->texture, (Vector2){-f->scrollOffset, SCREEN_HEIGHT - f->texture.height}, 0.0f, 1.0f, WHITE);
-    DrawTextureEx(f->texture, (Vector2){f->texture.width - f->scrollOffset, SCREEN_HEIGHT - f->texture.height}, 0.0f, 1.0f, WHITE);
+    DrawTextureEx(f->texture, (Vector2){-f->scrollOffset, GetScreenHeight() - f->texture.height}, 0.0f, 1.0f, WHITE);
+    DrawTextureEx(f->texture, (Vector2){f->texture.width - f->scrollOffset, GetScreenHeight() - f->texture.height}, 0.0f, 1.0f, WHITE);
 }
