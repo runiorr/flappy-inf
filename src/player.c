@@ -60,7 +60,7 @@ void player_movement(void *g, Player *p)
         _player_update_position(p);
 
         if (_player_hits_floor(p))
-            _player_dead(gameState->player);
+            _player_dead(p);
         // Publish(EVENT_COLLISION, GROUND, gameState);
     }
 }
