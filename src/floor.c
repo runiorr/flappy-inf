@@ -14,7 +14,7 @@ void floor_movement(void *g, Floor *f)
     {
         f->scrollOffset += f->scrollSpeed;
         // If the offset is greater than the texture width, reset it to create a looping effect
-        if (f->scrollOffset >= f->texture.width)
+        if (f->scrollOffset == f->texture.width)
         {
             f->scrollOffset = 0.0f;
         }

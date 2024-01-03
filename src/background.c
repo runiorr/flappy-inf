@@ -6,7 +6,7 @@ void init_background(Background *b,
                      Texture2D cloudsTexture)
 {
     b->bushesTexture = bushesTexture;
-    b->bushesScrollSpeed = 1.6f;
+    b->bushesScrollSpeed = 2.0f;
     b->bushesScrollOffset = 0.0f;
     b->buildingsTexture = buildingsTexture;
     b->buildingsScrollSpeed = 1.0f;
@@ -24,19 +24,19 @@ void background_movement(void *g, Background *b)
     if (game->player->alive)
     {
         b->bushesScrollOffset += b->bushesScrollSpeed;
-        if (b->bushesScrollOffset >= b->bushesTexture.width)
+        if (b->bushesScrollOffset == b->bushesTexture.width)
         {
             b->bushesScrollOffset = 0.0f;
         }
 
         b->buildingsScrollOffset += b->buildingsScrollSpeed;
-        if (b->buildingsScrollOffset >= b->buildingsTexture.width)
+        if (b->buildingsScrollOffset == b->buildingsTexture.width)
         {
             b->buildingsScrollOffset = 0.0f;
         }
 
         b->cloudsScrollOffset += b->cloudsScrollSpeed;
-        if (b->cloudsScrollOffset >= b->cloudsTexture.width)
+        if (b->cloudsScrollOffset == b->cloudsTexture.width)
         {
             b->cloudsScrollOffset = 0.0f;
         }
