@@ -46,7 +46,7 @@ int main(void)
     init_game(&game, &floor, &player, &background);
 
     Sound deathSound = LoadSound("resources/audio/evil_laugh_edit.mp3");
-    Sound backgroundMusic = LoadSound("resources/audio/bg_music.mp3");
+    Sound backgroundMusic = LoadSound("resources/audio/bg_blackops.mp3");
 
     // Subscribe(EVENT_COLLISION, &HandleCollision);
     // Subscribe(EVENT_MOVEMENT, &HandleMovement);

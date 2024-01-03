@@ -1,6 +1,7 @@
 #include "player.h"
 #include "pubsub.h"
 
+#define NUMBER_SPRITES 3
 typedef struct GameState
 {
     float gravity;
@@ -9,7 +10,7 @@ typedef struct GameState
 
 void init_player(Player *p, Image spriteImage)
 {
-    Texture2D *textures = load_textures(spriteImage, 3);
+    Texture2D *textures = load_textures(spriteImage, NUMBER_SPRITES);
     p->textures = textures;
     p->current = textures[0];
     p->position = (Vector2){PLAYER_START_POSITION_X, PLAYER_START_POSITION_Y};
@@ -23,11 +24,7 @@ void init_player(Player *p, Image spriteImage)
 
 void deload_player(Player *p)
 {
-    for (int i = 0; i < 3; i++)
-    {
-        UnloadTexture(p->textures[i]);
-    }
-    free(p->textures);
+    unload_textures(p->textures, NUMBER_SPRITES);
 }
 
 void player_update_frame(Player *p, int currentFrame)

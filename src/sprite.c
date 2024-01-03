@@ -14,12 +14,21 @@ Texture2D *load_textures(Image image, int n_sprites)
 
     for (int i = 0; i < n_sprites; i++)
     {
-        frameRec.x = (float)(i + 1) * (tmpTexture.width / n_sprites);
         Image croppedImage = ImageFromImage(image, frameRec);
         Texture2D frameTexture = LoadTextureFromImage(croppedImage);
         UnloadImage(croppedImage);
         textures[i] = frameTexture;
+        frameRec.x = (float)(i + 1) * (tmpTexture.width / n_sprites);
     }
     UnloadTexture(tmpTexture);
     return textures;
+}
+
+void unload_textures(Texture2D *textures, int n_sprites)
+{
+    for (int i = 0; i < n_sprites; i++)
+    {
+        UnloadTexture(textures[i]);
+    }
+    free(textures);
 }
