@@ -11,8 +11,26 @@
 #include "player.h"
 #include "pipe.h"
 
-// TODO: add DEBUG INFO through args
-// int main( int argc, char **argv )
+void restart_game(GameState *gameState, PipeManager *pipeManager)
+{
+    // TODO: Criar metodos para reiniciar os objetos do player e cano
+    gameState->player->alive = true;
+    gameState->player->position.y = PLAYER_START_POSITION_Y;
+    gameState->player->velocity = (Vector2){0, 0};
+    gameState->player->alive = true;
+    gameState->player->spinDegree = 0;
+    gameState->player->tiltAngle = 0;
+    gameState->player->color.a = 255;
+
+    for (int i = 0; i < MAX_PIPE_COUNT; i++)
+    {
+        Pipe pipe;
+        _random_pipe(pipeManager, &pipe, i);
+        pipeManager->pipes[i] = pipe;
+    }
+}
+
+// TODO: add DEBUG INFO through args ---> int main( int argc, char **argv )
 int main(void)
 {
     // TODO : GetScreenWidth()
@@ -57,9 +75,12 @@ int main(void)
     //--------------------------------------------------------------------------------------
 
     // Main game loop
-    // TODO: Restart game function
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
+        //  Reinicia o jogo se pressionar 'Q'
+        if (IsKeyPressed(KEY_Q))
+            restart_game(&game, &pipeManager);
+
         // TODO: Add deltaTime to decouple FPS from logic
         // States
         //----------------------------------------------------------------------------------
