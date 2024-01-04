@@ -12,4 +12,25 @@
 #define MAX_PIPE_COUNT 7
 #define LAST_PIPE MAX_PIPE_COUNT - 1
 
+// TODO: This need to come from external file
+//  #define OBSTACLE_VELOCITY 4;
+//  #define OBSTACLE_VELOCITY 15;
+#define OBSTACLE_VELOCITYY 300.0f;
+
+// Old Values before Delta time
+// #define GRAVITY 0.5f
+// #define PLAYER_JUMPSPEED 10.0f
+// #define FLOOR_SCROLLSPEED 5.0f
+// #define BUSHES_SCROLLSPEED 2.0f
+// #define BUILDINGS_SCROLLSPEED 1.0f
+// #define CLOUDS_SCROLLSPEED 0.5f
+
+// After Delta time
+#define GRAVITY 1000.0f
+#define PLAYER_JUMPSPEED 375.0f
+#define FLOOR_SCROLLSPEED 300.0f
+#define BUSHES_SCROLLSPEED 120.0f
+#define BUILDINGS_SCROLLSPEED 60.0f
+#define CLOUDS_SCROLLSPEED 30.0f
+
 #endif /* CONSTANTS_H */

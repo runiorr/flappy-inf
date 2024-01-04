@@ -26,13 +26,13 @@ void player_update_frame(Player *p, int *framesCounter, int *currentFrame);
 
 void player_movement(void *g, Player *p);
 
-void player_animation(Player *p);
+void player_animation(Player *p, float deltaTime);
 
-void _player_update_position(Player *p);
+void _player_update_position(Player *p, float deltaTime);
 
 void _player_jump(Player *p);
 
-void _player_gravity(Player *p, float gravity);
+void _player_gravity(Player *p, float gravity, float deltaTime);
 
 bool _player_hits_floor(Player *p);
 

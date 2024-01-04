@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include "pipe.h"
-#include "pubsub.h"
+#include "constants.h"
 
 void init_pipe_manager(PipeManager *pipeManager, Texture2D bottomPipeTexture, Texture2D topPipeTexture)
 {
 	const int GAP = 200;
-	const int OBSTACLE_VELOCITY = 4;
+	const int OBSTACLE_VELOCITY = OBSTACLE_VELOCITYY;
 
 	pipeManager->bottomPipeTexture = bottomPipeTexture;
 	pipeManager->topPipeTexture = topPipeTexture;
@@ -45,7 +45,7 @@ void pipe_movement(void *g, PipeManager *pipeManager)
 		for (int i = 0; i < MAX_PIPE_COUNT; i++)
 		{
 			// Atualizar posição dos tubos
-			pipeManager->pipes[i].x -= pipeManager->obstacleVelocity;
+			pipeManager->pipes[i].x -= pipeManager->obstacleVelocity * gameState->deltaTime;
 
 			// TODO: Adicionar animacao para ele sumindo
 			// Verifique se o tubo foi passado para gerar novo

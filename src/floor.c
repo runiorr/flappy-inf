@@ -3,7 +3,7 @@
 void init_floor(Floor *f, Texture2D floorTexture)
 {
     f->texture = floorTexture;
-    f->scrollSpeed = 5.0f;
+    f->scrollSpeed = FLOOR_SCROLLSPEED;
     f->scrollOffset = 0.0f;
 }
 
@@ -12,9 +12,9 @@ void floor_movement(void *g, Floor *f)
     GameState *game = (GameState *)g;
     if (game->player->alive)
     {
-        f->scrollOffset += f->scrollSpeed;
+        f->scrollOffset += f->scrollSpeed * game->deltaTime;
         // If the offset is greater than the texture width, reset it to create a looping effect
-        if (f->scrollOffset == f->texture.width)
+        if (f->scrollOffset >= f->texture.width)
         {
             f->scrollOffset = 0.0f;
         }

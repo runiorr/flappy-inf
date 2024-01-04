@@ -6,13 +6,13 @@ void init_background(Background *b,
                      Texture2D cloudsTexture)
 {
     b->bushesTexture = bushesTexture;
-    b->bushesScrollSpeed = 2.0f;
+    b->bushesScrollSpeed = BUSHES_SCROLLSPEED;
     b->bushesScrollOffset = 0.0f;
     b->buildingsTexture = buildingsTexture;
-    b->buildingsScrollSpeed = 1.0f;
+    b->buildingsScrollSpeed = BUILDINGS_SCROLLSPEED;
     b->buildingsScrollOffset = 0.0f;
     b->cloudsTexture = cloudsTexture;
-    b->cloudsScrollSpeed = 0.5f;
+    b->cloudsScrollSpeed = CLOUDS_SCROLLSPEED;
     b->cloudsScrollOffset = 0.0f;
 }
 
@@ -23,20 +23,20 @@ void background_movement(void *g, Background *b)
     // If the offset is greater than the texture width, reset it to create a looping effect
     if (game->player->alive)
     {
-        b->bushesScrollOffset += b->bushesScrollSpeed;
-        if (b->bushesScrollOffset == b->bushesTexture.width)
+        b->bushesScrollOffset += b->bushesScrollSpeed * game->deltaTime;
+        if (b->bushesScrollOffset >= b->bushesTexture.width)
         {
             b->bushesScrollOffset = 0.0f;
         }
 
-        b->buildingsScrollOffset += b->buildingsScrollSpeed;
-        if (b->buildingsScrollOffset == b->buildingsTexture.width)
+        b->buildingsScrollOffset += b->buildingsScrollSpeed * game->deltaTime;
+        if (b->buildingsScrollOffset >= b->buildingsTexture.width)
         {
             b->buildingsScrollOffset = 0.0f;
         }
 
-        b->cloudsScrollOffset += b->cloudsScrollSpeed;
-        if (b->cloudsScrollOffset == b->cloudsTexture.width)
+        b->cloudsScrollOffset += b->cloudsScrollSpeed * game->deltaTime;
+        if (b->cloudsScrollOffset >= b->cloudsTexture.width)
         {
             b->cloudsScrollOffset = 0.0f;
         }

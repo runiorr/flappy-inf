@@ -31,9 +31,9 @@ void restart_game(GameState *gameState, PipeManager *pipeManager)
 }
 
 // TODO: add DEBUG INFO through args ---> int main( int argc, char **argv )
+// TODO : use const
 int main(void)
 {
-    // TODO : use const
     // Initialization
     //--------------------------------------------------------------------------------------
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "FlappyInf");
@@ -79,15 +79,18 @@ int main(void)
     //--------------------------------------------------------------------------------------
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
-        //  Reinicia o jogo se pressionar 'R'
+        // Restart when 'R' is pressed
+        //----------------------------------------------------------------------------------
         if (IsKeyPressed(KEY_R))
             restart_game(&game, &pipeManager);
+        //----------------------------------------------------------------------------------
 
-        // TODO: Add deltaTime to decouple FPS from logic
         // States
         //----------------------------------------------------------------------------------
+        // TODO: Add deltaTime to decouple FPS from logic
         // TODO: Configure states (Menu, score, difficulty)
-        // game_update_state(&game);
+        float deltaTime = GetFrameTime();
+        game_update_state(&game, deltaTime);
         //----------------------------------------------------------------------------------
 
         // Sounds
@@ -118,7 +121,9 @@ int main(void)
         background_animation(&background);
         pipe_animation(&pipeManager);
         floor_animation(&floor);
-        player_animation(&player);
+        player_animation(&player, deltaTime);
+
+        DrawText(TextFormat("FPS: %d", GetFPS()), 10, 10, 20, DARKGRAY);
 
         EndDrawing();
         //----------------------------------------------------------------------------------

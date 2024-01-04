@@ -2,10 +2,14 @@
 
 void init_game(GameState *g, Floor *f, Player *p, Background *b)
 {
-    g->gravity = 0.5f;
+    g->gravity = GRAVITY;
     g->floor = f;
     g->player = p;
     g->background = b;
+}
+void game_update_state(GameState *g, float deltaTime)
+{
+    g->deltaTime = deltaTime;
 }
 
 void game_sounds(GameState *g, Sound deathSound, Sound backgroundMusic)
@@ -14,7 +18,7 @@ void game_sounds(GameState *g, Sound deathSound, Sound backgroundMusic)
     {
         if (!IsSoundPlaying(backgroundMusic))
         {
-            SetSoundVolume(backgroundMusic, 0.1);
+            SetSoundVolume(backgroundMusic, 0.05);
             PlaySound(backgroundMusic);
         }
     }
@@ -26,6 +30,7 @@ void game_sounds(GameState *g, Sound deathSound, Sound backgroundMusic)
     {
         if (!IsSoundPlaying(deathSound))
         {
+            SetSoundVolume(deathSound, 0.5);
             PlaySound(deathSound);
         }
     }

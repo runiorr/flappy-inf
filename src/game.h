@@ -8,6 +8,7 @@
 typedef struct GameState
 {
     float gravity;
+    float deltaTime;
     Floor *floor;
     Player *player;
     Background *background;
@@ -15,7 +16,7 @@ typedef struct GameState
 
 void init_game(GameState *g, Floor *f, Player *p, Background *b);
 
-// void game_update_state(GameState *g);
+void game_update_state(GameState *g, float deltaTime);
 
 void game_sounds(GameState *g, Sound deathSound, Sound backgroundMusic);
 

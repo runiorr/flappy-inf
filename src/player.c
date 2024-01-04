@@ -1,5 +1,4 @@
 #include "player.h"
-#include "pubsub.h"
 
 #define NUMBER_SPRITES 3
 #define FRAMES_SPEED 6
@@ -7,6 +6,7 @@
 typedef struct GameState
 {
     float gravity;
+    float deltaTime;
     Player *player;
 } GameState;
 
@@ -17,7 +17,7 @@ void init_player(Player *p, Image spriteImage)
     p->current = textures[0];
     p->position = (Vector2){PLAYER_START_POSITION_X, PLAYER_START_POSITION_Y};
     p->velocity = (Vector2){0, 0};
-    p->jumpSpeed = 10.0f;
+    p->jumpSpeed = PLAYER_JUMPSPEED;
     p->alive = true;
     p->spinDegree = 0;
     p->tiltAngle = 0;
@@ -56,8 +56,8 @@ void player_movement(void *g, Player *p)
             _player_jump(p);
 
         // TODO: Change to pubsub if have more objects
-        _player_gravity(p, gameState->gravity);
-        _player_update_position(p);
+        _player_gravity(p, gameState->gravity, gameState->deltaTime);
+        _player_update_position(p, gameState->deltaTime);
 
         if (_player_hits_floor(p))
             _player_dead(p);
@@ -65,11 +65,11 @@ void player_movement(void *g, Player *p)
     }
 }
 
-void player_animation(Player *p)
+void player_animation(Player *p, float deltaTime)
 {
     if (p->alive)
     {
-        float tiltAngle = p->velocity.y * 4.0;
+        float tiltAngle = p->velocity.y * 8 * deltaTime;
         Rectangle source = {0, 0, p->current.width, p->current.height};
         Rectangle dest = {p->position.x, p->position.y, p->current.width, p->current.height};
         Vector2 origin = {p->current.width / 2, p->current.height / 2};
@@ -79,15 +79,13 @@ void player_animation(Player *p)
     {
         // Transparency
         if (p->color.a <= 5)
-        {
             p->color.a = 0;
-        }
         else
-        {
             p->color.a -= 2.5;
-        }
+
         // Spinning
-        p->tiltAngle = ((p->velocity.y - p->spinDegree) / 10.0f) * 30.0f;
+        // TODO: Correct spinning speed
+        p->tiltAngle = (p->velocity.y - p->spinDegree) * 8;
         if (p->tiltAngle <= -90 && p->tiltAngle > -180)
         {
             p->spinDegree += 2;
@@ -98,11 +96,11 @@ void player_animation(Player *p)
         }
         else if (p->tiltAngle <= -270 && p->tiltAngle > -360)
         {
-            p->spinDegree += 9;
+            p->spinDegree += 18;
         }
         else if (p->tiltAngle <= -360)
         {
-            p->spinDegree += 12;
+            p->spinDegree += 24;
         }
 
         Rectangle source = {0, 0, p->current.width, p->current.height};
@@ -113,9 +111,9 @@ void player_animation(Player *p)
     }
 }
 
-void _player_update_position(Player *p)
+void _player_update_position(Player *p, float deltaTime)
 {
-    p->position.y += p->velocity.y;
+    p->position.y += p->velocity.y * deltaTime;
 }
 
 void _player_jump(Player *p)
@@ -123,9 +121,9 @@ void _player_jump(Player *p)
     p->velocity.y = -p->jumpSpeed;
 }
 
-void _player_gravity(Player *p, float gravity)
+void _player_gravity(Player *p, float gravity, float deltaTime)
 {
-    p->velocity.y += gravity;
+    p->velocity.y += gravity * deltaTime;
 }
 
 bool _player_hits_floor(Player *p)
