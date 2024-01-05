@@ -28,8 +28,8 @@
 // #define CLOUDS_SCROLLSPEED 0.5f
 
 // After Delta time
-#define GRAVITY 1300.0f
-#define PLAYER_JUMPSPEED 450.0f
+#define GRAVITY 1400.0f
+#define PLAYER_JUMPSPEED 500.0f
 
 #define FLOOR_SCROLLSPEED 300.0f
 #define BUSHES_SCROLLSPEED 120.0f
