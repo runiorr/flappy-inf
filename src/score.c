@@ -15,5 +15,5 @@ void score_update(Score *score)
 
 void score_animation(Score *score)
 {
-    DrawText(TextFormat("%05d", score->value), score->position.x, score->position.y, 50, score->color);
+    DrawText(TextFormat("%06d", score->value), score->position.x, score->position.y, 50, score->color);
 }
