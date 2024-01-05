@@ -33,7 +33,6 @@ void _random_pipe(PipeManager *pipeManager, Pipe *pipe, int i)
 	pipe->bottomPipeStart = topPipeHeight + pipeManager->gap;
 	pipe->x = (GetScreenWidth() / 2) + (pipeManager->offset * i);
 	pipe->jumped = false;
-	pipe->visible = true;
 }
 
 void pipe_movement(void *g, PipeManager *pipeManager)
@@ -60,14 +59,21 @@ void pipe_movement(void *g, PipeManager *pipeManager)
 				pipeManager->pipes[i].x = GetScreenWidth() + (2 * pipeManager->offset);
 			}
 
-			// Verifica se acertou cano para cada cano perto do jogador
+			// Validacao para canos perto do jogador
 			bool pipeCloseToPlayer = pipeManager->pipes[i].x < (PLAYER_START_POSITION_X + 50) && pipeManager->pipes[i].x > (PLAYER_START_POSITION_X - 50);
 			if (pipeCloseToPlayer)
 			{
+				// Verifica se acertou cano para cada cano perto do jogador
 				if (_pipe_collision(gameState, pipeManager, pipeManager->pipes[i]))
 				{
 					// Publish(EVENT_COLLISION, PIPE, gameState);
 					_player_dead(gameState->player);
+				}
+				// Se player passou pelo cano, ganha pontos
+				if (pipeManager->pipes[i].x <= PLAYER_START_POSITION_X && pipeManager->pipes[i].jumped == false)
+				{
+					pipeManager->pipes[i].jumped = true;
+					score_update(gameState->score);
 				}
 			}
 		}

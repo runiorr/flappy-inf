@@ -1,11 +1,12 @@
 #include "game.h"
 
-void init_game(GameState *g, Floor *f, Player *p, Background *b)
+void init_game(GameState *g, Floor *f, Player *p, Background *b, Score *s)
 {
     g->gravity = GRAVITY;
     g->floor = f;
     g->player = p;
     g->background = b;
+    g->score = s;
 }
 void game_update_state(GameState *g, float deltaTime)
 {

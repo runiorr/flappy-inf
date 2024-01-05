@@ -4,6 +4,7 @@
 #include "player.h"
 #include "floor.h"
 #include "background.h"
+#include "score.h"
 
 typedef struct GameState
 {
@@ -12,9 +13,10 @@ typedef struct GameState
     Floor *floor;
     Player *player;
     Background *background;
+    Score *score;
 } GameState;
 
-void init_game(GameState *g, Floor *f, Player *p, Background *b);
+void init_game(GameState *g, Floor *f, Player *p, Background *b, Score *s);
 
 void game_update_state(GameState *g, float deltaTime);
 

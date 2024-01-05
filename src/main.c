@@ -10,6 +10,7 @@
 #include "background.h"
 #include "player.h"
 #include "pipe.h"
+#include "score.h"
 
 void restart_game(GameState *gameState, PipeManager *pipeManager)
 {
@@ -21,6 +22,8 @@ void restart_game(GameState *gameState, PipeManager *pipeManager)
     gameState->player->spinDegree = 0;
     gameState->player->tiltAngle = 0;
     gameState->player->color.a = 255;
+
+    gameState->score->value = 0;
 
     for (int i = 0; i < MAX_PIPE_COUNT; i++)
     {
@@ -59,9 +62,12 @@ int main(void)
     Player player;
     init_player(&player, playerImage);
 
+    Score score;
+    init_score(&score);
+
     // TODO: Use gameState everywhere (headers, methods)
     GameState game;
-    init_game(&game, &floor, &player, &background);
+    init_game(&game, &floor, &player, &background, &score);
 
     Sound deathSound = LoadSound("resources/audio/evil_laugh_edit.mp3");
     Sound backgroundMusic = LoadSound("resources/audio/bg_blackops.mp3");
@@ -73,7 +79,7 @@ int main(void)
     int currentFrame = 0;
     //--------------------------------------------------------------------------------------
 
-    SetTargetFPS(60);
+    SetTargetFPS(120);
 
     // Main game loop
     //--------------------------------------------------------------------------------------
@@ -122,8 +128,9 @@ int main(void)
         pipe_animation(&pipeManager);
         floor_animation(&floor);
         player_animation(&player, deltaTime);
+        score_animation(&score);
 
-        DrawText(TextFormat("FPS: %d", GetFPS()), 10, 10, 20, DARKGRAY);
+        // DrawText(TextFormat("FPS: %d", GetFPS()), 10, 10, 20, DARKGRAY);
 
         EndDrawing();
         //----------------------------------------------------------------------------------

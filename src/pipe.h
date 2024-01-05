@@ -11,7 +11,6 @@ typedef struct Pipe
     int bottomPipeStart;
     int x;
     bool jumped;
-    bool visible;
 } Pipe;
 
 typedef struct PipeManager
