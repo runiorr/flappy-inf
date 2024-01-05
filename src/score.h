@@ -10,6 +10,7 @@ typedef struct Score
     Vector2 position;
     Font font;
     Color color;
+    Color backgroundColor;
 } Score;
 
 void init_score(Score *score);
