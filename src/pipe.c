@@ -31,7 +31,7 @@ void _random_pipe(PipeManager *pipeManager, Pipe *pipe, int i)
 	float topPipeHeight = GetRandomValue(0, GetScreenHeight() / 2);
 	pipe->topPipeStart = (0 - GetScreenHeight()) + topPipeHeight;
 	pipe->bottomPipeStart = topPipeHeight + pipeManager->gap;
-	pipe->x = (GetScreenWidth() / 2) + (pipeManager->offset * i);
+	pipe->x = (GetScreenWidth() / 3 * 2) + (pipeManager->offset * i);
 	pipe->jumped = false;
 }
 
@@ -44,7 +44,12 @@ void pipe_movement(void *g, PipeManager *pipeManager)
 		for (int i = 0; i < MAX_PIPE_COUNT; i++)
 		{
 			// Atualizar posição dos tubos
-			pipeManager->pipes[i].x -= pipeManager->obstacleVelocity * gameState->deltaTime;
+			int newPosition = pipeManager->pipes[i].x - pipeManager->obstacleVelocity * gameState->deltaTime;
+
+			if (newPosition <= 0 && i != LAST_PIPE)
+				pipeManager->pipes[i].x = 0;
+			else
+				pipeManager->pipes[i].x = newPosition;
 
 			// TODO: Adicionar animacao para ele sumindo
 			// Verifique se o tubo foi passado para gerar novo
